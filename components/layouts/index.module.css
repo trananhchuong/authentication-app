@@ -9,10 +9,6 @@
     padding: 0.5rem 2rem;
 }
 
-.root .appLogo {
-    cursor: pointer;
-}
-
 @media only screen and (max-width: 768px) {
     .root {
         justify-content: center;

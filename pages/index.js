@@ -2,10 +2,6 @@ import Head from "next/head";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Layout from "../components/layouts/Layout.js";
-import styles from "../styles/Home.module.css";
-
-
-
 
 export default function Home() {
   const [message, setMessage] = useState("");
@@ -26,7 +22,7 @@ export default function Home() {
       // setMessage(`Hi ${content.name}`);
       // setAuth(true);
 
-      if (true) {
+      if (false) {
         setMessage(`Hi Chuong`);
         setAuth(true);
       } else {
