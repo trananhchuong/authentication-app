@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -6,10 +6,13 @@ import LayoutLogged from "./LayoutLogged";
 
 import styled from "styled-components";
 import AuthenticationComponent from "../authen/AuthenticationComponent";
+import { AppContext } from "../../Context/AppProvider";
 
 const LayoutStyled = styled.div``;
 
 const Layout = (props) => {
+  const { userInfo, auth } = useContext(AppContext);
+
   const router = useRouter();
 
   const logout = async () => {
@@ -24,7 +27,7 @@ const Layout = (props) => {
   };
 
   const renderLayout = () => {
-    if (props.auth) return <LayoutLogged logout={logout} />;
+    if (auth) return <LayoutLogged logout={logout} />;
     return <AuthenticationComponent />;
   };
 
