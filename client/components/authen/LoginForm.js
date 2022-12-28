@@ -8,6 +8,7 @@ import {
   USER_INFORMATION_FORM_INPUT_NAME,
 } from "../../constants/authenConstants";
 import CustomFormInput from "../formCustomInput/CustomFormInput";
+import LoadingComponent from "../loading/LoadingComponent";
 
 LoginForm.propTypes = {};
 
@@ -27,9 +28,6 @@ function LoginForm(props) {
   const {
     register,
     handleSubmit,
-    trigger,
-    getValues,
-    control,
     setValue,
     setError,
     clearErrors,
@@ -37,10 +35,7 @@ function LoginForm(props) {
   } = useForm({
     mode: "onChange",
     resolver: yupResolver(schemaValidate()),
-    // defaultValues: {
-    // },
   });
-  console.log("🚀 ~ file: LoginForm.js:43 ~ LoginForm ~ errors", errors);
 
   const onSubmit = (values) => {
     console.log("🚀 ~ file: LoginForm.js:45 ~ onSubmit ~ values", values);

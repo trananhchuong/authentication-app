@@ -236,7 +236,7 @@ function AuthenticationComponent() {
 
   return (
     <AuthenticationComponentStyled>
-      <div className="container" id="container" ref={containerRef}>
+      <div className="container" ref={containerRef}>
         <SignUpForm />
         <LoginForm />
 
