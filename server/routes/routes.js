@@ -18,7 +18,7 @@ router.post("/register", async (req, res) => {
 
     const { password, ...data } = await result.toJSON();
 
-    res.send(data);
+    res.status(200).send(data);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -46,7 +46,7 @@ router.post("/login", async (req, res) => {
     maxAge: 24 * 60 * 60 * 1000, // 1 day
   });
 
-  res.send({
+  res.status(200).send({
     message: "success",
     user,
     accessToken: token,
@@ -55,12 +55,10 @@ router.post("/login", async (req, res) => {
 
 router.get("/user", async (req, res) => {
   try {
-    // const authorizationHeader = req.headers['authorization'];
-    // // // 'Bearer [token]'
-    // const token = authorizationHeader.split(' ')[1];
-
-    const cookie = req.cookies["jwt"];
-    const claims = jwt.verify(cookie, "secret");
+    const authorizationHeader = req.headers["authorization"];
+    // // 'Bearer [token]'
+    const token = authorizationHeader.split(" ")[1];
+    const claims = jwt.verify(token, "secret");
 
     if (!claims) {
       return res.status(401).send({
@@ -72,9 +70,8 @@ router.get("/user", async (req, res) => {
 
     const { password, ...data } = await user.toJSON();
 
-    res.send(data);
+    res.status(200).send(data);
   } catch (e) {
-    
     return res.status(401).send({
       message: "unauthenticated",
     });
@@ -82,11 +79,17 @@ router.get("/user", async (req, res) => {
 });
 
 router.post("/logout", (req, res) => {
-  res.cookie("jwt", "", { maxAge: 0 });
+  try {
+    res.cookie("jwt", "", { maxAge: 0 });
 
-  res.send({
-    message: "success",
-  });
+    res.status(200).send({
+      message: "success",
+    });
+  } catch (error) {
+    return res.status(401).send({
+      message: error,
+    });
+  }
 });
 
 module.exports = router;

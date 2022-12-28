@@ -1,6 +1,6 @@
 export const USER_INFORMATION_FORM_INPUT_NAME = {
   EMAIL: "email",
-  USERNAME: "username",
+  USER_NAME: "username",
   PASSWORD: "password",
 };
 

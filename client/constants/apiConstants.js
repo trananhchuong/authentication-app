@@ -1,4 +1,7 @@
-export const ACCESS_TOKEN_NAME = "accessToken";
+export const ACCESS_TOKEN_NAME = "access_token";
+
+export const DEFAULT_COOKIE_MAX_AGE = 60*60*24; // 1 day
+
 
 export const getCookie = (name) => {
   try {
