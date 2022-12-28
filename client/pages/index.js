@@ -37,7 +37,6 @@ export default function Home() {
         setAuth(false);
       }
     } catch (e) {
-      console.log("🚀 ~ file: index.js:40 ~ getHasAuthentication ~ e", e)
       setAuth(false);
     }
   };

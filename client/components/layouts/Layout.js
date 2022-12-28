@@ -3,7 +3,6 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import LayoutLogged from "./LayoutLogged";
-import LayoutNotLogged from "./LayoutNotLogged";
 
 import styled from "styled-components";
 import AuthenticationComponent from "../authen/AuthenticationComponent";

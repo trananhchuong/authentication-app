@@ -78,14 +78,18 @@ const AuthenticationComponentStyled = styled.div`
     padding: 0 50px;
     height: 100%;
     text-align: center;
-  }
 
-  input {
-    background-color: #eee;
-    border: none;
-    padding: 12px 15px;
-    margin: 8px 0;
-    width: 100%;
+    input {
+      background-color: #eee;
+      border: none;
+      padding: 12px 15px;
+      margin: 8px 0;
+      width: 100%;
+    }
+
+    .button-signin {
+      margin-top: 12px;
+    }
   }
 
   .container {
