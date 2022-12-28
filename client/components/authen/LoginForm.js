@@ -24,7 +24,7 @@ const schemaValidate = () => {
   });
 };
 
-function LoginForm({ handleLogin, isLoading }) {
+function LoginForm({ handleLogin, isLoading, handleSignUpClick }) {
   const {
     register,
     handleSubmit,
@@ -71,6 +71,10 @@ function LoginForm({ handleLogin, isLoading }) {
         <button type="submit" className="button-signin">
           {isLoading ? <IconLoading /> : "Sign In"}
         </button>
+
+        <div className="signup-switch" onClick={handleSignUpClick}>
+          Signup
+        </div>
       </form>
     </div>
   );

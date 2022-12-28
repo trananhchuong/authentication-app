@@ -4,7 +4,7 @@ import * as yup from "yup";
 import {
   ERROR_MESSAGE,
   getErrorByCode,
-  USER_INFORMATION_FORM_INPUT_NAME
+  USER_INFORMATION_FORM_INPUT_NAME,
 } from "../../constants/authenConstants";
 import CustomFormInput from "../formCustomInput/CustomFormInput";
 import IconLoading from "../iconLoading/IconLoading";
@@ -24,7 +24,7 @@ const schemaValidate = () => {
   });
 };
 
-function SignUpForm({ handleSignup, isLoading }) {
+function SignUpForm({ handleSignup, isLoading, handleSignInClick }) {
   const {
     register,
     handleSubmit,
@@ -81,6 +81,10 @@ function SignUpForm({ handleSignup, isLoading }) {
         <button type="submit" className="button-signin">
           {isLoading ? <IconLoading /> : "Sign Up"}
         </button>
+
+        <div className="signup-switch" onClick={handleSignInClick}>
+          Sign In
+        </div>
       </form>
     </div>
   );

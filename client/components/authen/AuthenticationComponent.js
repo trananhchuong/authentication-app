@@ -230,6 +230,36 @@ const AuthenticationComponentStyled = styled.div`
   .container.right-panel-active .overlay-right {
     transform: translateX(20%);
   }
+
+  .signup-switch {
+    display: none;
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 0 14px;
+  }
+
+  @media screen and (max-width: 576px) {
+    .overlay-container {
+      display: none;
+    }
+
+    .sign-in-container,
+    .sign-up-container {
+      width: 100%;
+    }
+
+    .container.right-panel-active .sign-up-container {
+      transform: translateX(0%);
+    }
+
+    .signup-switch {
+      display: flex;
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+    }
+  }
 `;
 
 AuthenticationComponent.propTypes = {};
@@ -269,18 +299,15 @@ function AuthenticationComponent({ getHasAuthentication }) {
         path: "/",
         maxAge: DEFAULT_COOKIE_MAX_AGE,
       });
-
       const content = {
         message: "Login Successfully",
         type: TYPE_CONSTANTS.SUCCESS,
       };
       renderToastCard(content);
       setIsLoading(false);
-
       getHasAuthentication && getHasAuthentication();
     } catch (error) {
       const message = error?.response?.data?.message;
-
       const content = { message, type: TYPE_CONSTANTS.ERROR };
       renderToastCard(content);
       setIsLoading(false);
@@ -299,6 +326,7 @@ function AuthenticationComponent({ getHasAuthentication }) {
 
       renderToastCard(content);
       setIsLoading(false);
+      handleSignInClick();
     } catch (error) {
       const message = error?.response?.data?.message;
 
@@ -311,8 +339,17 @@ function AuthenticationComponent({ getHasAuthentication }) {
   return (
     <AuthenticationComponentStyled>
       <div className="container" ref={containerRef}>
-        <SignUpForm handleSignup={handleSignup} isLoading={isLoading} />
-        <LoginForm handleLogin={handleLogin} isLoading={isLoading} />
+        <SignUpForm
+          handleSignup={handleSignup}
+          isLoading={isLoading}
+          handleSignInClick={handleSignInClick}
+
+        />
+        <LoginForm
+          handleLogin={handleLogin}
+          isLoading={isLoading}
+          handleSignUpClick={handleSignUpClick}
+        />
 
         <div className="overlay-container">
           <div className="overlay">

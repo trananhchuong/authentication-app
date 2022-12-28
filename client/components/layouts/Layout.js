@@ -1,12 +1,11 @@
-import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import LayoutLogged from "./LayoutLogged";
 
+import { useCookies } from "react-cookie";
 import styled from "styled-components";
+import authenticationApi from "../../api/authenticationApi";
 import { AppContext } from "../../Context/AppProvider";
 import AuthenticationComponent from "../authen/AuthenticationComponent";
-import authenticationApi from "../../api/authenticationApi";
-import { useCookies } from "react-cookie";
 import IconLoading from "../iconLoading/IconLoading";
 
 const LayoutLoadingStyled = styled.div`
