@@ -1,6 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { HiSwitchHorizontal } from "react-icons/hi";
 import * as yup from "yup";
 import {
   ERROR_MESSAGE,
@@ -73,7 +74,8 @@ function LoginForm({ handleLogin, isLoading, handleSignUpClick }) {
         </button>
 
         <div className="signup-switch" onClick={handleSignUpClick}>
-          Signup
+            <HiSwitchHorizontal />
+            Signup
         </div>
       </form>
     </div>

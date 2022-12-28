@@ -258,6 +258,16 @@ const AuthenticationComponentStyled = styled.div`
       position: absolute;
       bottom: 15px;
       right: 15px;
+
+      align-items: center;
+      background: #ff8a65;
+      padding: 10px;
+      border-radius: 20px;
+      color: #fff;
+
+      svg{
+        margin-right: 3px;
+      }
     }
   }
 `;
@@ -343,7 +353,6 @@ function AuthenticationComponent({ getHasAuthentication }) {
           handleSignup={handleSignup}
           isLoading={isLoading}
           handleSignInClick={handleSignInClick}
-
         />
         <LoginForm
           handleLogin={handleLogin}

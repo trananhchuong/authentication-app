@@ -9,6 +9,7 @@ import {
 import CustomFormInput from "../formCustomInput/CustomFormInput";
 import IconLoading from "../iconLoading/IconLoading";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { HiSwitchHorizontal } from "react-icons/hi";
 
 SignUpForm.propTypes = {};
 
@@ -83,7 +84,7 @@ function SignUpForm({ handleSignup, isLoading, handleSignInClick }) {
         </button>
 
         <div className="signup-switch" onClick={handleSignInClick}>
-          Sign In
+          <HiSwitchHorizontal /> Sign In
         </div>
       </form>
     </div>
