@@ -48,13 +48,13 @@ router.post("/login", async (req, res) => {
 
   res.send({
     message: "success",
-    user
+    user,
+    accessToken: token,
   });
 });
 
 router.get("/user", async (req, res) => {
   try {
-
     // const authorizationHeader = req.headers['authorization'];
     // // // 'Bearer [token]'
     // const token = authorizationHeader.split(' ')[1];

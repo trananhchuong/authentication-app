@@ -2,6 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Layout from "../components/layouts/Layout.js";
+import { getCookie } from "../constants/apiConstants.js";
 
 export default function Home() {
   const [message, setMessage] = useState("");
@@ -21,6 +22,8 @@ export default function Home() {
 
       // setMessage(`Hi ${content.name}`);
       // setAuth(true);
+
+      // const userToken = getCookie("token");
 
       if (false) {
         setMessage(`Hi Chuong`);
