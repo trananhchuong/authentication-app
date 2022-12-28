@@ -1,22 +1,22 @@
-import Head from "next/head";
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import authenticationApi from "../api/authenticationApi.js";
 import Layout from "../components/layouts/Layout.js";
-import { getCookie } from "../constants/apiConstants.js";
 
 export default function Home() {
-  const [message, setMessage] = useState("");
   const [auth, setAuth] = useState(false);
 
   useEffect(() => {
     getHasAuthentication();
-  });
+  }, []);
 
   const getHasAuthentication = async () => {
     try {
-      // const response = await fetch("http://localhost:8000/api/user", {
-      //   credentials: "include",
-      // });
+      const response = await authenticationApi.getUserInfo();
+
+      console.log(
+        "🚀 ~ file: index.js:19 ~ getHasAuthentication ~ response",
+        response
+      );
 
       // const content = await response.json();
 
@@ -25,18 +25,22 @@ export default function Home() {
 
       // const userToken = getCookie("token");
 
+      // const response = await fetch("http://localhost:8000/api/user");
+
+      // const content = await response.json();
+      // console.log("🚀 ~ file: index.js:36 ~ getHasAuthentication ~ content", content)
+
       if (false) {
         setMessage(`Hi Chuong`);
         setAuth(true);
       } else {
-        setMessage("You are not logged in");
         setAuth(false);
       }
     } catch (e) {
-      setMessage("You are not logged in");
+      console.log("🚀 ~ file: index.js:40 ~ getHasAuthentication ~ e", e)
       setAuth(false);
     }
   };
 
-  return <Layout auth={auth}>{message}</Layout>;
+  return <Layout auth={auth} />;
 }

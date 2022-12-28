@@ -1,6 +1,4 @@
-export const BASE_API_URL = "http://localhost:8000/";
 export const ACCESS_TOKEN_NAME = "accessToken";
-
 
 export const getCookie = (name) => {
   try {

@@ -2,10 +2,10 @@ import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import Link from "next/link";
 import styled from "styled-components";
-import SignUpForm from "../signup/SignUpForm";
-import LoginForm from "../login/LoginForm";
+import SignUpForm from "./SignUpForm";
+import LoginForm from "./LoginForm";
 
-const LoginFormStyled = styled.div`
+const AuthenticationComponentStyled = styled.div`
   background: #f6f5f7;
   display: flex;
   justify-content: center;
@@ -68,7 +68,6 @@ const LoginFormStyled = styled.div`
       border-color: #ffffff;
     }
   }
-  
 
   form {
     background-color: #ffffff;
@@ -214,9 +213,9 @@ const LoginFormStyled = styled.div`
   }
 `;
 
-LayoutNotLogged.propTypes = {};
+AuthenticationComponent.propTypes = {};
 
-function LayoutNotLogged() {
+function AuthenticationComponent() {
   const containerRef = useRef(null);
 
   const handleSignUpClick = () => {
@@ -232,7 +231,7 @@ function LayoutNotLogged() {
   };
 
   return (
-    <LoginFormStyled>
+    <AuthenticationComponentStyled>
       <div className="container" id="container" ref={containerRef}>
         <SignUpForm />
         <LoginForm />
@@ -258,8 +257,8 @@ function LayoutNotLogged() {
           </div>
         </div>
       </div>
-    </LoginFormStyled>
+    </AuthenticationComponentStyled>
   );
 }
 
-export default LayoutNotLogged;
+export default AuthenticationComponent;

@@ -4,7 +4,6 @@ import {
   BASE_API_URL,
   getCookie,
 } from "../constants/apiConstants";
-import queryString from "query-string";
 
 // Set up default config for http requests here
 // Please have a look at here `https://github.com/axios/axios#request- config` for the full list of configs
@@ -13,15 +12,12 @@ const axiosClient = axios.create({
   headers: {
     "content-type": "application/json",
   },
-  paramsSerializer: (params) => queryString.stringify(params),
 });
 
 axiosClient.interceptors.request.use(async (config) => {
   const token = getCookie(ACCESS_TOKEN_NAME);
-
   let Authorization = "";
   if (token) Authorization = `Bearer ${token}`;
-
 
   return {
     ...config,
