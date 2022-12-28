@@ -1,9 +1,13 @@
-import React, { useRef } from "react";
-import PropTypes from "prop-types";
-import Link from "next/link";
+import React, { useRef, useState } from "react";
+import { Flip, toast } from "react-toastify";
 import styled from "styled-components";
-import SignUpForm from "./SignUpForm";
+import authenticationApi from "../../api/authenticationApi";
+import IconLoading from "../iconLoading/IconLoading";
+import ToastCardByType from "../toast/ToastCardByType";
+import ToastComponent from "../toast/ToastComponent";
+import { TYPE_CONSTANTS } from "../toast/ToastConstants";
 import LoginForm from "./LoginForm";
+import SignUpForm from "./SignUpForm";
 
 const AuthenticationComponentStyled = styled.div`
   background: #f6f5f7;
@@ -221,6 +225,15 @@ AuthenticationComponent.propTypes = {};
 
 function AuthenticationComponent() {
   const containerRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [toastType, setToastType] = useState("");
+
+  const renderToastCard = (content) => {
+    const { message, type } = content;
+
+    setToastType(type);
+    toast(<ToastCardByType message={message} type={type} />);
+  };
 
   const handleSignUpClick = () => {
     if (containerRef?.current) {
@@ -234,11 +247,31 @@ function AuthenticationComponent() {
     }
   };
 
+  const handleLogin = async (formValues) => {
+    try {
+      setIsLoading(true);
+      const response = await authenticationApi.loginAction(formValues);
+
+      const content = {
+        message: "Login Successfully",
+        type: TYPE_CONSTANTS.SUCCESS,
+      };
+      renderToastCard(content);
+      setIsLoading(false);
+    } catch (error) {
+      const message = error?.response?.data?.message;
+
+      const content = { message, type: TYPE_CONSTANTS.ERROR };
+      renderToastCard(content);
+      setIsLoading(false);
+    }
+  };
+
   return (
     <AuthenticationComponentStyled>
       <div className="container" ref={containerRef}>
         <SignUpForm />
-        <LoginForm />
+        <LoginForm handleLogin={handleLogin} isLoading={isLoading} />
 
         <div className="overlay-container">
           <div className="overlay">
@@ -248,19 +281,20 @@ function AuthenticationComponent() {
                 To keep connected with us please login with your personal info
               </p>
               <button className="ghost" onClick={handleSignInClick}>
-                Sign In
+                {isLoading ? <IconLoading /> : "Sign In"}
               </button>
             </div>
             <div className="overlay-panel overlay-right">
               <h1>Hello, Friend!</h1>
               <p>Enter your personal details and start journey with us</p>
               <button className="ghost" onClick={handleSignUpClick}>
-                Sign Up
+                {isLoading ? <IconLoading /> : "Sign Up"}
               </button>
             </div>
           </div>
         </div>
       </div>
+      <ToastComponent type={toastType} autoClose={3000} transition={Flip} />
     </AuthenticationComponentStyled>
   );
 }

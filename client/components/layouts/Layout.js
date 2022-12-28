@@ -29,20 +29,7 @@ const Layout = (props) => {
     return <AuthenticationComponent />;
   };
 
-  return (
-    <LayoutStyled>
-      {/* <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-        <div className="container-fluid">
-          <Link href="/">Home </Link>
-
-          <div>{renderLayout()}</div>
-        </div>
-      </nav> */}
-      {/* <main className="form-signin">{props.children}</main> */}
-
-      <div>{renderLayout()}</div>
-    </LayoutStyled>
-  );
+  return <LayoutStyled>{renderLayout()}</LayoutStyled>;
 };
 
 export default Layout;
