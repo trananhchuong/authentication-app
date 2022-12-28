@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Flip, toast } from "react-toastify";
 import styled from "styled-components";
 import authenticationApi from "../../api/authenticationApi";
@@ -13,6 +13,8 @@ import {
   DEFAULT_COOKIE_MAX_AGE,
 } from "../../constants/apiConstants";
 import { useCookies } from "react-cookie";
+import { useRouter } from "next/router";
+import { AppContext } from "../../Context/AppProvider";
 
 const AuthenticationComponentStyled = styled.div`
   background: #f6f5f7;
@@ -265,7 +267,7 @@ const AuthenticationComponentStyled = styled.div`
       border-radius: 20px;
       color: #fff;
 
-      svg{
+      svg {
         margin-right: 3px;
       }
     }
@@ -275,10 +277,12 @@ const AuthenticationComponentStyled = styled.div`
 AuthenticationComponent.propTypes = {};
 
 function AuthenticationComponent({ getHasAuthentication }) {
+
   const containerRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const [toastType, setToastType] = useState("");
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
+  const router = useRouter();
 
   const renderToastCard = (content) => {
     const { message, type } = content;
@@ -316,6 +320,7 @@ function AuthenticationComponent({ getHasAuthentication }) {
       renderToastCard(content);
       setIsLoading(false);
       getHasAuthentication && getHasAuthentication();
+      router.push("/");
     } catch (error) {
       const message = error?.response?.data?.message;
       const content = { message, type: TYPE_CONSTANTS.ERROR };
@@ -345,6 +350,8 @@ function AuthenticationComponent({ getHasAuthentication }) {
       setIsLoading(false);
     }
   };
+
+  
 
   return (
     <AuthenticationComponentStyled>
