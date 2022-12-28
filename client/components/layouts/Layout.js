@@ -1,12 +1,10 @@
-import React, { useContext } from "react";
-import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
+import React, { useContext } from "react";
 import LayoutLogged from "./LayoutLogged";
 
 import styled from "styled-components";
-import AuthenticationComponent from "../authen/AuthenticationComponent";
 import { AppContext } from "../../Context/AppProvider";
+import AuthenticationComponent from "../authen/AuthenticationComponent";
 
 const LayoutStyled = styled.div``;
 

@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import authenticationApi from "../../api/authenticationApi";
 import {
   ERROR_MESSAGE,
   getErrorByCode,
@@ -37,8 +38,13 @@ function LoginForm(props) {
     resolver: yupResolver(schemaValidate()),
   });
 
-  const onSubmit = (values) => {
-    console.log("🚀 ~ file: LoginForm.js:45 ~ onSubmit ~ values", values);
+  const onSubmit = async (formValues) => {
+    try {
+      const response = await authenticationApi.loginAction(formValues);
+
+    } catch (error) {
+      console.log("🚀 ~ file: LoginForm.js:45 ~ onSubmit ~ error", error);
+    }
   };
 
   return (
