@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import authenticationApi from "../../api/authenticationApi";
@@ -10,6 +10,10 @@ import {
 } from "../../constants/authenConstants";
 import CustomFormInput from "../formCustomInput/CustomFormInput";
 import LoadingComponent from "../loading/LoadingComponent";
+import ToastComponent from "../toast/ToastComponent";
+import { TYPE_CONSTANTS } from "../toast/ToastConstants";
+import { toast, Flip } from "react-toastify";
+import ToastCardByType from "../toast/ToastCardByType";
 
 LoginForm.propTypes = {};
 
@@ -38,12 +42,32 @@ function LoginForm(props) {
     resolver: yupResolver(schemaValidate()),
   });
 
+  const [toastType, setToastType] = useState("");
+
+  const renderToastCard = (content) => {
+    const { message, type } = content;
+    console.log(
+      "🚀 ~ file: LoginForm.js:49 ~ renderToastCard ~ content",
+      content
+    );
+    setToastType(type);
+    toast(<ToastCardByType message={message} type={type} />);
+  };
+
   const onSubmit = async (formValues) => {
     try {
       const response = await authenticationApi.loginAction(formValues);
 
+      const content = {
+        message: "Login Successfully",
+        type: TYPE_CONSTANTS.SUCCESS,
+      };
+      renderToastCard(content);
     } catch (error) {
-      console.log("🚀 ~ file: LoginForm.js:45 ~ onSubmit ~ error", error);
+      const message = error?.response?.data?.message;
+
+      const content = { message, type: TYPE_CONSTANTS.ERROR };
+      renderToastCard(content);
     }
   };
 
@@ -81,6 +105,7 @@ function LoginForm(props) {
           Sign In
         </button>
       </form>
+      <ToastComponent type={toastType} autoClose={3000} transition={Flip} />
     </div>
   );
 }
