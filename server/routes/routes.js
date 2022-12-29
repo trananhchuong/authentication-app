@@ -58,7 +58,9 @@ router.get("/user", async (req, res) => {
     const authorizationHeader = req.headers["authorization"];
     // // 'Bearer [token]'
     const token = authorizationHeader.split(" ")[1];
+    console.log("🚀 ~ file: routes.js:61 ~ router.get ~ token", token)
     const claims = jwt.verify(token, "secret");
+    console.log("🚀 ~ file: routes.js:63 ~ router.get ~ claims", claims)
 
     if (!claims) {
       return res.status(401).send({
