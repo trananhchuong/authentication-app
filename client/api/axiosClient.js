@@ -26,7 +26,7 @@ axiosClient.interceptors.request.use(async (config) => {
     },
     headers: {
       ...config.headers,
-      authorization: Authorization,
+      ...(Authorization && { authorization: Authorization }),
     },
   };
 });
