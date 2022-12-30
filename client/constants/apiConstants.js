@@ -1,3 +1,4 @@
+export const BASE_API_URL = "http://localhost:8000";
 export const ACCESS_TOKEN_NAME = "access_token";
 
 export const DEFAULT_COOKIE_MAX_AGE = 60*60*24; // 1 day
