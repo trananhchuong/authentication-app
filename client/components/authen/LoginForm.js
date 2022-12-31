@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import React from "react";
+import React, { forwardRef, useImperativeHandle } from "react";
 import { useForm } from "react-hook-form";
 import { HiSwitchHorizontal } from "react-icons/hi";
 import * as yup from "yup";
@@ -25,15 +25,26 @@ const schemaValidate = () => {
   });
 };
 
-function LoginForm({ handleLogin, isLoading, handleSignUpClick }) {
+function LoginForm({ handleLogin, isLoading, handleSignUpClick }, ref) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     mode: "onChange",
     resolver: yupResolver(schemaValidate()),
   });
+
+  useImperativeHandle(ref, () => ({
+    resetFormByRef: () => {
+      resetForm();
+    },
+  }));
+
+  const resetForm = () => {
+    reset({});
+  };
 
   const onSubmit = async (formValues) => {
     handleLogin && handleLogin(formValues);
@@ -73,13 +84,19 @@ function LoginForm({ handleLogin, isLoading, handleSignUpClick }) {
           {isLoading ? <IconLoading /> : "Sign In"}
         </button>
 
-        <div className="signup-switch" onClick={handleSignUpClick}>
-            <HiSwitchHorizontal />
-            Signup
+        <div
+          className="signup-switch"
+          onClick={() => {
+            resetForm();
+            handleSignUpClick && handleSignUpClick();
+          }}
+        >
+          <HiSwitchHorizontal />
+          Signup
         </div>
       </form>
     </div>
   );
 }
 
-export default LoginForm;
+export default forwardRef(LoginForm);

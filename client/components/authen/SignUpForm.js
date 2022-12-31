@@ -1,4 +1,4 @@
-import React from "react";
+import React, { forwardRef, useImperativeHandle } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import {
@@ -25,18 +25,29 @@ const schemaValidate = () => {
   });
 };
 
-function SignUpForm({ handleSignup, isLoading, handleSignInClick }) {
+function SignUpForm({ handleSignup, isLoading, handleSignInClick }, ref) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     mode: "onChange",
     resolver: yupResolver(schemaValidate()),
   });
 
+  useImperativeHandle(ref, () => ({
+    resetFormByRef: () => {
+      resetForm();
+    },
+  }));
+
   const onSubmit = async (formValues) => {
     handleSignup && handleSignup(formValues);
+  };
+
+  const resetForm = () => {
+    reset({});
   };
 
   return (
@@ -83,7 +94,13 @@ function SignUpForm({ handleSignup, isLoading, handleSignInClick }) {
           {isLoading ? <IconLoading /> : "Sign Up"}
         </button>
 
-        <div className="signup-switch" onClick={handleSignInClick}>
+        <div
+          className="signup-switch"
+          onClick={() => {
+            resetForm();
+            handleSignInClick && handleSignInClick();
+          }}
+        >
           <HiSwitchHorizontal /> Sign In
         </div>
       </form>
@@ -91,4 +108,4 @@ function SignUpForm({ handleSignup, isLoading, handleSignInClick }) {
   );
 }
 
-export default SignUpForm;
+export default forwardRef(SignUpForm);

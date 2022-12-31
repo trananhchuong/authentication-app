@@ -18,7 +18,10 @@ import SignUpForm from "./SignUpForm";
 AuthenticationComponent.propTypes = {};
 
 function AuthenticationComponent({ getHasAuthentication }) {
+  const signUpFormRef = useRef(null);
+  const loginFormRef = useRef(null);
   const containerRef = useRef(null);
+
   const [isLoading, setIsLoading] = useState(false);
   const [toastType, setToastType] = useState("");
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
@@ -34,13 +37,15 @@ function AuthenticationComponent({ getHasAuthentication }) {
   };
 
   const handleSignUpClick = () => {
-    if (containerRef?.current) {
+    if (containerRef?.current && loginFormRef?.current) {
+      loginFormRef?.current?.resetFormByRef();
       containerRef?.current?.classList?.add("right-panel-active");
     }
   };
 
   const handleSignInClick = () => {
-    if (containerRef?.current) {
+    if (containerRef?.current && signUpFormRef?.current) {
+      signUpFormRef?.current?.resetFormByRef();
       containerRef?.current?.classList?.remove("right-panel-active");
     }
   };
@@ -97,11 +102,13 @@ function AuthenticationComponent({ getHasAuthentication }) {
     <AuthenticationComponentStyled>
       <div className="container" ref={containerRef}>
         <SignUpForm
+          ref={signUpFormRef}
           handleSignup={handleSignup}
           isLoading={isLoading}
           handleSignInClick={handleSignInClick}
         />
         <LoginForm
+          ref={loginFormRef}
           handleLogin={handleLogin}
           isLoading={isLoading}
           handleSignUpClick={handleSignUpClick}
@@ -140,7 +147,7 @@ function AuthenticationComponent({ getHasAuthentication }) {
           </div>
         </div>
       </div>
-      <ToastComponent type={toastType} autoClose={3000} transition={Flip} />
+      <ToastComponent type={toastType} autoClose={2000} transition={Flip} />
     </AuthenticationComponentStyled>
   );
 }
