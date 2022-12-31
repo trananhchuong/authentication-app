@@ -5,6 +5,14 @@ const User = require("../models/user");
 
 router.post("/register", async (req, res) => {
   try {
+    const userIsExits = await User.findOne({ email: req.body.email });
+
+    if (userIsExits) {
+      return res.status(404).send({
+        message: "The user already exists in the system",
+      });
+    }
+
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
@@ -29,13 +37,13 @@ router.post("/login", async (req, res) => {
 
   if (!user) {
     return res.status(404).send({
-      message: "user not found",
+      message: "User not found",
     });
   }
 
   if (!(await bcrypt.compare(req.body.password, user.password))) {
     return res.status(400).send({
-      message: "invalid credentials",
+      message: "Invalid credentials",
     });
   }
 
@@ -59,7 +67,7 @@ router.get("/user", async (req, res) => {
     // // 'Bearer [token]'
     const token = authorizationHeader.split(" ")[1];
     const claims = jwt.verify(token, "secret");
-    
+
     if (!claims) {
       return res.status(401).send({
         message: "unauthenticated",
@@ -73,7 +81,7 @@ router.get("/user", async (req, res) => {
     res.status(200).send(data);
   } catch (e) {
     return res.status(401).send({
-      message: "unauthenticated",
+      message: "Unauthenticated",
     });
   }
 });
