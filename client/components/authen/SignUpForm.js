@@ -47,7 +47,11 @@ function SignUpForm({ handleSignup, isLoading, handleSignInClick }, ref) {
   };
 
   const resetForm = () => {
-    reset({});
+    reset({
+      [USER_INFORMATION_FORM_INPUT_NAME.USER_NAME]: "",
+      [USER_INFORMATION_FORM_INPUT_NAME.EMAIL]: "",
+      [USER_INFORMATION_FORM_INPUT_NAME.PASSWORD]: "",
+    });
   };
 
   return (
