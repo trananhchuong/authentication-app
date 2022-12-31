@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import React, { useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Flip, toast } from "react-toastify";
 import authenticationApi from "../../api/authenticationApi";
@@ -10,7 +10,7 @@ import {
 } from "../../constants/apiConstants";
 import ToastCardByType from "../toast/ToastCardByType";
 import ToastComponent from "../toast/ToastComponent";
-import { TYPE_CONSTANTS } from "../toast/ToastConstants";
+import { TYPE_CONSTANTS, TYPE_CONSTANTS_ID } from "../toast/ToastConstants";
 import { AuthenticationComponentStyled } from "./AuthenticationStyled";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
@@ -28,12 +28,11 @@ function AuthenticationComponent({ getHasAuthentication }) {
   const router = useRouter();
 
   const renderToastCard = (content) => {
-    const { message, type } = content;
+    const { message, type, toastId } = content;
     setToastType(type);
-
-    setTimeout(() => {
-      toast(<ToastCardByType message={message} type={type} />);
-    }, 300);
+    toast(<ToastCardByType message={message} type={type} />, {
+      toastId,
+    });
   };
 
   const handleSignUpClick = () => {
@@ -50,6 +49,12 @@ function AuthenticationComponent({ getHasAuthentication }) {
     }
   };
 
+  const clearToast = () => {
+    setTimeout(() => {
+      toast.dismiss();
+    }, 300);
+  };
+
   const handleLogin = async (formValues) => {
     try {
       setIsLoading(true);
@@ -63,14 +68,21 @@ function AuthenticationComponent({ getHasAuthentication }) {
       const content = {
         message: "Login Successfully",
         type: TYPE_CONSTANTS.SUCCESS,
+        toastId: TYPE_CONSTANTS_ID.ID_LOGIN,
       };
       renderToastCard(content);
       setIsLoading(false);
       getHasAuthentication && getHasAuthentication();
       router.push("/");
+      clearToast();
     } catch (error) {
       const message = error?.response?.data?.message;
-      const content = { message, type: TYPE_CONSTANTS.ERROR };
+      const content = {
+        message,
+        type: TYPE_CONSTANTS.ERROR,
+
+        toastId: TYPE_CONSTANTS_ID.ID_LOGIN,
+      };
       renderToastCard(content);
       setIsLoading(false);
     }
@@ -84,6 +96,7 @@ function AuthenticationComponent({ getHasAuthentication }) {
       const content = {
         message: "Signup Successfully",
         type: TYPE_CONSTANTS.SUCCESS,
+        toastId: TYPE_CONSTANTS_ID.ID_REGIS,
       };
 
       renderToastCard(content);
@@ -92,7 +105,11 @@ function AuthenticationComponent({ getHasAuthentication }) {
     } catch (error) {
       const message = error?.response?.data?.message;
 
-      const content = { message, type: TYPE_CONSTANTS.ERROR };
+      const content = {
+        message,
+        type: TYPE_CONSTANTS.ERROR,
+        toastId: TYPE_CONSTANTS_ID.ID_REGIS,
+      };
       renderToastCard(content);
       setIsLoading(false);
     }
@@ -147,7 +164,7 @@ function AuthenticationComponent({ getHasAuthentication }) {
           </div>
         </div>
       </div>
-      <ToastComponent type={toastType} autoClose={2000} transition={Flip} />
+      <ToastComponent type={toastType} autoClose={3000} transition={Flip} />
     </AuthenticationComponentStyled>
   );
 }
