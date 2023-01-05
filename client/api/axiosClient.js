@@ -15,9 +15,12 @@ const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use(async (config) => {
-  const token = getCookie(ACCESS_TOKEN_NAME);
+  const token = getCookie(ACCESS_TOKEN_NAME) || null;
+
   let Authorization = "";
-  if (token) Authorization = `Bearer ${token}`;
+  if (token !== "undefined" && token !== undefined && token) {
+    Authorization = `Bearer ${token}`;
+  }
 
   return {
     ...config,

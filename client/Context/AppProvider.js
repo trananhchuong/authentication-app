@@ -20,9 +20,15 @@ export const AppProvider = ({ children }) => {
     try {
       const response = await authenticationApi.getUserInfo();
 
-      setAuth(true);
-      setUserInfo(response);
-      setIsLoadingGlobal(false);
+      if (response?.isValid) {
+        setAuth(true);
+        setUserInfo(response);
+        setIsLoadingGlobal(false);
+        router.push("/homepage");
+      } else {
+        setAuth(false);
+        setIsLoadingGlobal(false);
+      }
     } catch (e) {
       console.log("🚀 ~ file: AppProvider.js:41 ~ getHasAuthentication ~ e", e);
       setAuth(false);

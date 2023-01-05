@@ -64,13 +64,21 @@ router.post("/login", async (req, res) => {
 router.get("/user", async (req, res) => {
   try {
     const authorizationHeader = req.headers["authorization"];
-    // // 'Bearer [token]'
+
+    if (!authorizationHeader) {
+      return res.status(200).send({
+        message: "unauthenticated",
+        isValid: false,
+      });
+    }
+    // 'Bearer [token]'
     const token = authorizationHeader.split(" ")[1];
     const claims = jwt.verify(token, "secret");
 
     if (!claims) {
-      return res.status(401).send({
+      return res.status(200).send({
         message: "unauthenticated",
+        isValid: false,
       });
     }
 
@@ -78,10 +86,12 @@ router.get("/user", async (req, res) => {
 
     const { password, ...data } = await user.toJSON();
 
-    res.status(200).send(data);
+    res.status(200).send({ ...data, isValid: true });
   } catch (e) {
     return res.status(401).send({
       message: "Unauthenticated",
+      e,
+      isValid: false,
     });
   }
 });

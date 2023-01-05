@@ -1,12 +1,12 @@
 import classNames from "classnames";
 import { useRouter } from "next/router";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Flip, toast } from "react-toastify";
 import authenticationApi from "../../api/authenticationApi";
 import {
   ACCESS_TOKEN_NAME,
-  DEFAULT_COOKIE_MAX_AGE,
+  DEFAULT_COOKIE_MAX_AGE
 } from "../../constants/apiConstants";
 import ToastCardByType from "../toast/ToastCardByType";
 import ToastComponent from "../toast/ToastComponent";

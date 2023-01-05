@@ -19,13 +19,8 @@ function HomeComponent({ logout, userInfo }) {
       </header>
       <main>
         <div class="main-container">
-          <h4 class="sub--main-title">Hello, {userInfo?.username}</h4>
-          <h1 class="main-title">Design & development</h1>
-          <p class="description">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s
-          </p>
+          <h4 class="sub--main-title">Hi, {userInfo?.username}</h4>
+          <h1 class="main-title">This is HOME PAGE</h1>
         </div>
       </main>
     </HomeComponentStyled>
